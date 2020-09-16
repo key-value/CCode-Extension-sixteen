@@ -29,6 +29,18 @@ const plugins =
         }
       ];
 
+// 开发环境将热加载文件复制到dist文件夹
+if (process.env.NODE_ENV !== "production") {
+  plugins.push(
+    CopyWebpackPlugin([
+      {
+        from: path.resolve("src/utils/hot-reload.ts"),
+        to: path.resolve("dist")
+      }
+    ])
+  );
+}
+
 module.exports = {
   pages: pagesObj,
   // // 生产环境是否生成 sourceMap 文件
@@ -36,7 +48,7 @@ module.exports = {
 
   configureWebpack: {
     entry: {
-      content: "./src/content/index.js"
+      content: "./src/content/index.ts"
     },
     output: {
       filename: "js/[name].js"
@@ -64,5 +76,12 @@ module.exports = {
         limit: 1000,
         name: "fonts/[name].[ext]"
       });
+    // 查看打包组件大小情况
+    if (process.env.npm_config_report) {
+      // 在运行命令中添加 --report参数运行， 如：npm run build --report
+      config
+        .plugin("webpack-bundle-analyzer")
+        .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
+    }
   }
 };
