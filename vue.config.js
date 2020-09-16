@@ -15,31 +15,26 @@ chromeName.forEach(name => {
 });
 
 const plugins =
-  process.env.NODE_ENV === "production"
-    ? [
-        {
-          from: path.resolve("src/manifest.production.json"),
-          to: `${path.resolve("dist")}/manifest.json`
-        }
-      ]
-    : [
-        {
-          from: path.resolve("src/manifest.development.json"),
-          to: `${path.resolve("dist")}/manifest.json`
-        }
-      ];
+  process.env.NODE_ENV === "production" ? [{
+    from: path.resolve("src/manifest.production.json"),
+    to: `${path.resolve("dist")}/manifest.json`
+  }] : [{
+    from: path.resolve("src/manifest.development.json"),
+    to: `${path.resolve("dist")}/manifest.json`
+  }, {
+    from: path.resolve("src/utils/hot-reload.js"),
+    to: path.resolve("dist")
+  }];
 
 // 开发环境将热加载文件复制到dist文件夹
-if (process.env.NODE_ENV !== "production") {
-  plugins.push(
-    CopyWebpackPlugin([
-      {
-        from: path.resolve("src/utils/hot-reload.ts"),
-        to: path.resolve("dist")
-      }
-    ])
-  );
-}
+// if (process.env.NODE_ENV !== "production") {
+//   plugins.push(
+//     CopyWebpackPlugin([{
+//       from: path.resolve("src/utils/hot-reload.js"),
+//       to: path.resolve("dist")
+//     }])
+//   );
+// }
 
 module.exports = {
   pages: pagesObj,

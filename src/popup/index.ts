@@ -1,6 +1,8 @@
 import Vue from "vue";
 import AppComponent from "./App/App.vue";
-import { Card } from "element-ui";
+import {
+  Card
+} from "element-ui";
 
 Vue.component("app-component", AppComponent);
 
