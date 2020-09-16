@@ -17,6 +17,6 @@
     }],
     "web_accessible_resources": ["fonts/*"],
     "background": {
-        "scripts": ["hot-reload.ts"]
+        "scripts": ["hot-reload.js"]
     }
 }
